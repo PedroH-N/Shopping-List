@@ -2,26 +2,27 @@
 # shopping list
 # store the predef list in a txt
 
-from re import findall
+import re
 
-#class Predefinition:
-    #show_predef()
+# class Predefinition:
+# show_predef()
 
-    #add_predef()
+# add_predef()
 
-    #remove_predef()
+# remove_predef()
 
-    #clear_predef()
+# clear_predef()
 
-    #start_checkmode()
+# start_checkmode()
 
-    #check_item()
+# check_item()
 
-    #uncheck_item()
+# uncheck_item()
+
 
 class Product:
 
-    #__init__():
+    # __init__():
     '''
     *add name, quant and price as instance variables
     input("Do you want to add it to predefinition? )
@@ -48,19 +49,39 @@ class Product:
             the int verification is working, but the float one isn't
             so i change to the re.findall() because I didn't understand why it's not working
             '''
-            digits = findall("[0-9]", product_name)  # re method
+            digits = re.findall("[0-9]", product_name)  # re method
 
             if not digits:
-                is_string = True
+                is_string = True  # help comment
+            else:
+                print("Invalid name, just accept alphabetical letters.\n")
 
             if product_name and is_string:
                 break
 
         return product_name
 
-    #get_quantity()
+    @classmethod
+    def get_quantity(cls):
+        while True:
+            product_quantity = input("Quantity: ").strip()
+            is_int = False
 
-    #get_price_optional()
+            # g and k are accepted because equals gram or kilogram
+            digits = re.findall("[a-fh-jl-z]", product_quantity, re.IGNORECASE)
+
+            if not digits:
+                is_int = True
+            else:
+                print("Invalid quantity, just accepts numbers and the letters K and G.\n")
+
+            if product_quantity and is_int:
+                break
+
+        return product_quantity
+
+    # get_price_optional()
+
 
 Product.get_product()
-
+Product.get_quantity()
