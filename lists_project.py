@@ -1,9 +1,32 @@
 
 # shopping list
+# store the predef list in a txt
+
 from re import findall
 
+#class Predefinition:
+    #show_predef()
+
+    #add_predef()
+
+    #remove_predef()
+
+    #clear_predef()
+
+    #start_checkmode()
+
+    #check_item()
+
+    #uncheck_item()
 
 class Product:
+
+    #__init__():
+    '''
+    *add name, quant and price as instance variables
+    input("Do you want to add it to predefinition? )
+    if: it's already on the predefinition, do you want to write over or don't write?
+    '''
 
     @classmethod
     def get_product(cls):
@@ -35,7 +58,9 @@ class Product:
 
         return product_name
 
+    #get_quantity()
+
+    #get_price_optional()
 
 Product.get_product()
-# product_name = input("Product name: ").strip().capitalize()
-# print(float(product_name))
+
