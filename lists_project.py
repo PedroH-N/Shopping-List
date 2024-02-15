@@ -73,15 +73,55 @@ class Product:
             if not digits:
                 is_int = True
             else:
-                print("Invalid quantity, just accepts numbers and the letters K and G.\n")
+                print(
+                    "Invalid quantity, just accepts numbers and the letters K and G.\n")
 
             if product_quantity and is_int:
                 break
 
         return product_quantity
 
-    # get_price_optional()
+    @classmethod
+    def get_price_optional(cls):
+        while True:
+
+            product_price_yn = input(
+                "Do you wan't to put the price? (Y/N) ").strip()
+
+            digit = re.findall("(y|n)", product_price_yn, re.IGNORECASE)
+            digit_yes = re.search("y", product_price_yn, re.IGNORECASE)
+            digit_no = re.search("n", product_price_yn, re.IGNORECASE)
+
+            if len(digit) > 1:
+                print("Invalid answer, type just one character\n")
+            if not digit_yes and not digit_no:
+                print("Invalid answer, type Y or N (uppercase or lowercase)\n")
+
+            if digit_no and len(digit) == 1:
+                break
+
+            if digit_yes and len(digit) == 1:
+
+                while True:
+                    product_price = input("Price (write just the number): ")
+
+                    is_int = False
+
+                    digits = re.findall("[a-z]", product_price, re.IGNORECASE)
+
+                    if not digits:
+                        is_int = True
+                    else:
+                        print("Invalid price")
+
+                    if product_price and is_int:
+                        print("you exited")
+                        break
+
+            if product_price and is_int:
+                break
 
 
 Product.get_product()
 Product.get_quantity()
+Product.get_price_optional()
