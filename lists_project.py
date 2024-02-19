@@ -5,9 +5,7 @@ import re
 # shopping list
 # store the predef list in a txt
 
-predefinition_list = [
-    {"name": "Banana", "quantity": "12", "price": "15"}
-]
+predefinition = Predefinition()
 
 
 def write_over_choice_function(name, quantity, price=None):
@@ -74,7 +72,7 @@ def write_over_choice_function(name, quantity, price=None):
 
 
 def product_in_list_check(name):
-    for product in predefinition_list:
+    for product in predefinition.predefinition_list:
         if product["name"] == name:
             flag_first_time = True
             while True:
@@ -105,16 +103,25 @@ def product_in_list_check(name):
                     if return_value_write_over["exit"] == 1:
                         return [return_value_write_over["name"], return_value_write_over["quantity"], return_value_write_over["price"]]
 
+    return None  # if the name isn't in the predefinition
+
 
 def main():
-    product_isnt = Product(Product.get_product(), Product.get_quantity(),
+    global predefinition
+
+    product_inst = Product(Product.get_product(), Product.get_quantity(),
                            Product.get_price_optional())
-    new_values_return = product_in_list_check(product_isnt.name)
+    new_values_return = product_in_list_check(product_inst.name)
 
     if isinstance(new_values_return, list):
-        product_isnt.name = new_values_return[0]
-        product_isnt.quantity = new_values_return[1]
-        product_isnt.price = new_values_return[2]
+        product_inst.name = new_values_return[0]
+        product_inst.quantity = new_values_return[1]
+        product_inst.price = new_values_return[2]
+
+    predefinition.fill("predefinition.txt")
+    predefinition.show()
+    predefinition.add(product_inst.name, product_inst.quantity, product_inst.price)
+    predefinition.show()
 
 
 if __name__ == "__main__":

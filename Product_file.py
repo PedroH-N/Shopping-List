@@ -3,7 +3,6 @@ import re
 class Product:
 
     def __init__(self, name, quantity, price=None):
-        global predefinition_list
         self.name = name
         self.quantity = quantity
         self.price = price
@@ -47,7 +46,7 @@ class Product:
             is_int = False
 
             # g and k are accepted because equals gram or kilogram
-            digits = re.findall("[^0-9kg]", product_quantity, re.IGNORECASE)
+            digits = re.findall("[^0-9kg.,]", product_quantity, re.IGNORECASE)
 
             if not digits:
                 is_int = True
@@ -91,7 +90,7 @@ class Product:
 
             is_int = False
 
-            digits = re.findall("[^0-9]", product_price, re.IGNORECASE)
+            digits = re.findall("[^0-9.,]", product_price, re.IGNORECASE)
 
             if not digits:
                 is_int = True
