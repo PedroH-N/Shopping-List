@@ -106,21 +106,48 @@ def product_in_list_check(name):
     return None  # if the name isn't in the predefinition
 
 
-def main():
-    global predefinition
-
-    product_inst = Product(Product.get_product(), Product.get_quantity(),
-                           Product.get_price_optional())
-    new_values_return = product_in_list_check(product_inst.name)
+def product_in_list_check_assignments(instance: object):
+    new_values_return = product_in_list_check(instance.name)
 
     if isinstance(new_values_return, list):
-        product_inst.name = new_values_return[0]
-        product_inst.quantity = new_values_return[1]
-        product_inst.price = new_values_return[2]
+        instance.name = new_values_return[0]
+        instance.quantity = new_values_return[1]
+        instance.price = new_values_return[2]
+        # remove from list the old item, so that it don't duplicate
 
+
+def first_menu_questions():
+    while True:
+        print(
+            15 * "-", "SHOPPING LIST", 15 * "-", "\n"
+            "This is a program that stores and manages a shopping list. The predefinition list is\n"
+            "a list that is stored in memory that stays the same even when you turn off the program.\n"
+            "You have these options:\n[1] See your predefinition list\n[2] Add a item\n[3] Start check mode\n"
+        )
+
+        answer = input()
+        if answer != 1 and answer != 2 and answer != 3:
+            print("Invalid answer, please reanswer typing just one of the numbers.")
+        else:
+            return answer
+
+
+def main():
+    global predefinition
     predefinition.fill("predefinition.txt")
+    
+    product_inst = Product(Product.get_product(), Product.get_quantity(),
+                           Product.get_price_optional())
+
+    product_in_list_check_assignments(product_inst)
+
     predefinition.show()
-    predefinition.add(product_inst.name, product_inst.quantity, product_inst.price)
+    predefinition.add(product_inst.name,
+                      product_inst.quantity, product_inst.price)
+    predefinition.show()
+    predefinition.remove("Orange")
+    predefinition.show()
+    predefinition.clear()
     predefinition.show()
 
 

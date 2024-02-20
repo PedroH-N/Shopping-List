@@ -15,10 +15,13 @@ class Predefinition:
 
     def show(self):
         print("\nThis is your predefinition list:\n")
-        for item in self.predefinition_list:
-            print(
-                f"Name: {item['name']}, Quantity: {item['quantity']}, Price: {item['price']}"
-            )
+        if self.predefinition_list:
+            for item in self.predefinition_list:
+                print(
+                    f"Name: {item['name']}, Quantity: {item['quantity']}, Price: {item['price']}"
+                )
+        else:
+            print("There's nothing in your list.")
 
     def add(self, name: str = None, quantity=None, price=0):
 
@@ -33,13 +36,16 @@ class Predefinition:
             self.predefinition_list.append(
                 {"name": name, "quantity": quantity, "price": price})
 
-    # remove_predef()
+    def remove(self, name: str):
+        for item in self.predefinition_list:
+            if item["name"] == name:
+                self.predefinition_list.remove(item)
 
-    # clear_predef()
+    def clear(self):
+        self.predefinition_list.clear()
 
     # start_checkmode()
 
     # check_item()
 
     # uncheck_item()
-    ...
