@@ -116,40 +116,75 @@ def product_in_list_check_assignments(instance: object):
         # remove from list the old item, so that it don't duplicate
 
 
-def first_menu_questions():
+def menu_question_change_list():
+    while True:
+        print(
+            "Choose one of the options to change the predefinition list:\n"
+            "[1] Add an item\n[2] Remove an item\n[3] Clear the list\n[4] Go back"
+        )
+        answer2 = input()
+        
+        if answer2 == "1":
+            return int(answer2)
+        elif answer2 == "2":
+            return int(answer2)
+        elif answer2 == "3":
+            return int(answer2)
+        elif answer2 == "4":
+            return int(answer2)
+        else:
+            print("Invalid answer, please reanswer typing just one of the numbers.")
+
+
+def menu_questions_main():
     while True:
         print(
             15 * "-", "SHOPPING LIST", 15 * "-", "\n"
             "This is a program that stores and manages a shopping list. The predefinition list is\n"
             "a list that is stored in memory that stays the same even when you turn off the program.\n"
-            "You have these options:\n[1] See your predefinition list\n[2] Add a item\n[3] Start check mode\n"
+            "Choose one of the options:\n[1] See your predefinition list\n[2] Change your predefinition list\n[3] Start check mode (not available yet)\n[4] Exit"
         )
 
         answer = input()
-        if answer != 1 and answer != 2 and answer != 3:
+
+        if answer == "1" or answer == "3" or answer == "4":
+            return dict({"question_number": 1, "answer": int(answer)})
+
+        if answer == "2":
+            return dict({"question_number": 0, "answer": "other_function"})
+
+        if answer:
             print("Invalid answer, please reanswer typing just one of the numbers.")
-        else:
-            return answer
 
 
 def main():
     global predefinition
     predefinition.fill("predefinition.txt")
-    
-    product_inst = Product(Product.get_product(), Product.get_quantity(),
-                           Product.get_price_optional())
 
-    product_in_list_check_assignments(product_inst)
+    while True:
+        answer_menu_1 = menu_questions_main()
 
-    predefinition.show()
-    predefinition.add(product_inst.name,
-                      product_inst.quantity, product_inst.price)
-    predefinition.show()
-    predefinition.remove("Orange")
-    predefinition.show()
-    predefinition.clear()
-    predefinition.show()
+        if answer_menu_1["question_number"] == 1:
+            if answer_menu_1["answer"] == 1:
+                predefinition.show()
+            elif answer_menu_1["answer"] == 4:
+                break
 
+        elif answer_menu_1["question_number"] == 0 and answer_menu_1["answer"] == "other_function":
+            while True:
+                answer_change_list = menu_question_change_list()
+                if answer_change_list == 1:
+                    product_inst = Product(Product.get_product(), Product.get_quantity(),
+                                        Product.get_price_optional())
+                    predefinition.add(product_inst.name,
+                                    product_inst.quantity, product_inst.price)
+                elif answer_change_list == 2:
+                    predefinition.remove(Product.get_product())
+                elif answer_change_list == 3:
+                    predefinition.clear()
+                elif answer_change_list == 4:
+                    break
 
 if __name__ == "__main__":
     main()
+    predefinition.write_txt()

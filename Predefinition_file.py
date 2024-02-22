@@ -37,12 +37,22 @@ class Predefinition:
                 {"name": name, "quantity": quantity, "price": price})
 
     def remove(self, name: str):
+        item_is_in = False
         for item in self.predefinition_list:
             if item["name"] == name:
                 self.predefinition_list.remove(item)
+                item_is_in = True
+        
+        if not item_is_in:
+            print("Item not found in the predefinition list.")
 
     def clear(self):
         self.predefinition_list.clear()
+
+    def write_txt(self):
+        with open("predefinition.txt", "w") as file:
+            for item in self.predefinition_list:
+                file.write(f"{item['name']};{item['quantity']};{item['price']};")
 
     # start_checkmode()
 
