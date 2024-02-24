@@ -152,9 +152,16 @@ def menu_questions_main():
 
         if answer == "2":
             return dict({"question_number": 0, "answer": "other_function"})
+        
+        if answer == "3":
+            return dict({"question_number": 1, "answer": int(answer)})
 
         if answer:
             print("Invalid answer, please reanswer typing just one of the numbers.")
+
+
+def checkmode_shopping():
+    predefinition.start_checkmode()
 
 
 def main():
@@ -169,6 +176,8 @@ def main():
                 predefinition.show()
             elif answer_menu_1["answer"] == 4:
                 break
+            if answer_menu_1["answer"] == 3:
+                checkmode_shopping()
 
         elif answer_menu_1["question_number"] == 0 and answer_menu_1["answer"] == "other_function":
             while True:
@@ -184,6 +193,7 @@ def main():
                     predefinition.clear()
                 elif answer_change_list == 4:
                     break
+
 
 if __name__ == "__main__":
     main()
