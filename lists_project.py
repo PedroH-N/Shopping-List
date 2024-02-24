@@ -160,10 +160,6 @@ def menu_questions_main():
             print("Invalid answer, please reanswer typing just one of the numbers.")
 
 
-def checkmode_shopping():
-    predefinition.start_checkmode()
-
-
 def main():
     global predefinition
     predefinition.fill("predefinition.txt")
@@ -177,7 +173,7 @@ def main():
             elif answer_menu_1["answer"] == 4:
                 break
             if answer_menu_1["answer"] == 3:
-                checkmode_shopping()
+                predefinition.start_checkmode()
 
         elif answer_menu_1["question_number"] == 0 and answer_menu_1["answer"] == "other_function":
             while True:

@@ -67,16 +67,20 @@ class Predefinition:
             print("\n***Item not found in the list.***\n")
 
         while True:
-            is_checked = False
 
-            for item in self.predefinition_list:
-                for checked in self.checked_items:
-                    if item['name'] == checked['name']:
-                        is_checked = True
+            def print_check_list():
+                for item in self.predefinition_list:
+                    is_checked = False
+                    for checked in self.checked_items:
+                        if item['name'] == checked['name']:
+                            is_checked = True
+                            print(
+                                f"[X] {item['name']}, Quantity: {item['quantity']}")
+                    if is_checked == False:
                         print(
-                            f"[X] {item['name']}, Quantity: {item['quantity']}")
-                if is_checked == False:
-                    print(f"[ ] {item['name']}, Quantity: {item['quantity']}")
+                            f"[ ] {item['name']}, Quantity: {item['quantity']}")
+
+            print_check_list()
 
             print(30*"-", "\n")
 
@@ -88,23 +92,24 @@ class Predefinition:
                 item_to_check = input(
                     "(Don't write anything if you want to uncheck some item)\n"
                     "Write the item's name you want to check: "
-                ).strip().capitalize()
+                ).capitalize()
 
-                for item in self.predefinition_list:
-                    if item['name'] == item_to_check:
-                        is_to_check = True
-
-                if item_to_check == "" or item_to_check == None:
-                    is_to_check = True
-
-                if not is_to_check:
-                    not_found()
+                if item_to_check:
+                    for item in self.predefinition_list:
+                        if item['name'] == item_to_check:
+                            is_to_check = True
 
                 if item_to_check and is_to_check:
                     self.checked_items.append({"name": item_to_check})
                     break
 
-            if not item_to_check and not is_to_check:
+                if not is_to_check and item_to_check != "":
+                    not_found()
+
+                else:
+                    break
+
+            if item_to_check == "" and not is_to_check:
                 while True:
                     is_unchecked = False
                     uncheck = input(
@@ -112,13 +117,20 @@ class Predefinition:
                         "Write the item's name you want to uncheck: "
                     ).strip().capitalize()
                     for item in self.checked_items:
-                        if item['name'] == uncheck or uncheck == "":
+                        if item['name'] == uncheck:
                             is_unchecked = True
                             self.checked_items.remove(item)
-                            break
-                    if not is_unchecked:
-                        not_found()
+                            print("ok")
+
+                    if is_unchecked:
+                        break
+
+                    if not is_unchecked and uncheck != "":
+                        print("\n***Item not checked or not found in the list.***\n")
+                    else:
+                        break
 
             if len(self.predefinition_list) == len(self.checked_items):
+                print_check_list()
                 self.checked_items.clear()
                 break
