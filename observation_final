@@ -1,8 +1,7 @@
+- cleancode the functions that are notted as it
+- understand better how the Interface class is working an how the main file is calling it
+- try to code the Checkmode class in the another file
 
- - cleancode the functions that are notted as it
- - understand better how the Interface class is working an how the main file is calling it
- - try to code the Checkmode class in the another file
+Error: - the message of duplicate items in the list isn't appearing - it is related to the function under the Interface class at the same file
 
- 
- Error: - the message of duplicate items in the list isn't appearing
-        - it is related to the function under the Interface class at the same file
+02/03 -> refactor the Product class

@@ -10,44 +10,59 @@ class Predefinition:
     def fill(self, predef_file_name: str):
         with open(predef_file_name, "r") as predef_file:
             for line in predef_file:
-                name, quantity, price, space = line.split(";")
-                self.predefinition_list.append(
-                    {"name": name, "quantity": quantity, "price": price}
-                )
+                self.fill_predefinition_list_with_line_in_text(line)
 
-    def show(self):
-        print("\nThis is your predefinition list:\n")
-        if self.predefinition_list:
-            for item in self.predefinition_list:
-                print(
-                    f"Name: {item['name']}, Quantity: {item['quantity']}, Price: {item['price']}"
-                )
-        else:
-            print("There's nothing in your list.")
-
-    def add(self, name: str = None, quantity=None, price=0):
-
-        if name and quantity:
+    def fill_predefinition_list_with_line_in_text(self, line: str):
+        if line.strip() != "":
+            name, quantity, price, space = line.split(";")
             self.predefinition_list.append(
                 {"name": name, "quantity": quantity, "price": price}
             )
 
+    def show(self):
+        print("\nThis is your predefinition list:\n")
+
+        for item in self.predefinition_list and self.predefinition_list:
+            print(
+                f"Name: {item['name']}, Quantity: {item['quantity']}, Price: {item['price']}"
+            )
+        if not self.predefinition_list:
+            print("There's nothing in your list.")
+
+    def check_if_in_predefinition_list(self, new_item: str):
+        for item in self.predefinition_list:
+            if item["name"] == new_item:
+                return True
+        return False
+
+    def add_if_item_is_in_predefinition_list(self):
+
+        answer = Product.yes_or_no_input(
+            "\nItem is already in the predefinition list, do you want to add it again? (Y/N)\n"
+        )
+        if answer:
+            return True
         else:
-            name = Product.get_product()
-            quantity = Product.get_quantity()
-            price = Product.get_price_optional()
+            return False
+
+    def add(self, name: str = None, quantity=None, price=0):
+
+        is_in = self.check_if_in_predefinition_list(name)
+
+        if is_in:
+            answer = self.add_if_item_is_in_predefinition_list()
+
+        if name and quantity and (not is_in or answer):
             self.predefinition_list.append(
                 {"name": name, "quantity": quantity, "price": price}
             )
 
     def remove(self, name: str):
-        item_is_in = False
-        for item in self.predefinition_list:
-            if item["name"] == name:
-                self.predefinition_list.remove(item)
-                item_is_in = True
 
-        if not item_is_in:
+        answer = self.check_if_in_predefinition_list(name)
+        if answer:
+            self.predefinition_list.remove(name)
+        if not answer:
             print("Item not found in the predefinition list.")
 
     def clear(self):
@@ -88,8 +103,6 @@ class Predefinition:
             print(30 * "-", "\n")
 
             is_to_check = False
-
-            # the program is understanding ""/None as a "item not found", not as the trigger to go to uncheck part
 
             while True:
                 item_to_check = input(

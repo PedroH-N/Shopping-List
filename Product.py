@@ -58,21 +58,28 @@ class Product:
 
     @classmethod
     def get_price_optional(cls):
+
+        answer = cls.yes_or_no_input("Do you want to put the price? (Y/N)\n")
+
+        if answer:
+            return cls.get_price_normal()
+
+    @classmethod
+    def yes_or_no_input(cls, text: str):
         while True:
+            answer = input(text).strip()
 
-            product_price_yn = input("Do you wan't to put the price? (Y/N) ").strip()
-
-            digit = re.findall("(y|n)", product_price_yn, re.IGNORECASE)
-            digit_yes = re.search("y", product_price_yn, re.IGNORECASE)
-            digit_no = re.search("n", product_price_yn, re.IGNORECASE)
+            digit = re.findall("(y|n)", answer, re.IGNORECASE)
+            digit_yes = re.search("y", answer, re.IGNORECASE)
+            digit_no = re.search("n", answer, re.IGNORECASE)
 
             cls.is_yes_or_no_error_message(digit, digit_yes, digit_no)
 
             if digit_no and len(digit) == 1:
-                break
+                return False
 
             if digit_yes and len(digit) == 1:
-                return Product.get_price_normal()
+                return True
 
     @classmethod
     def is_yes_or_no_error_message(cls, digit, digit_yes, digit_no):

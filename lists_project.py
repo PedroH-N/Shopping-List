@@ -2,10 +2,7 @@ from Product import Product
 from Predefinition import Predefinition
 from Interface import Interface
 from Checkmode import Checkmode
-import re
 
-# shopping list
-# store the predef list in a txt
 
 predefinition = Predefinition()
 
