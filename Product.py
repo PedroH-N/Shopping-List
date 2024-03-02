@@ -24,28 +24,22 @@ class Product:
 
     @classmethod
     def is_alphabetical(cls, digits):
-        is_string = False
+        is_accepted = False
         if not digits:
-            is_string = True  # help comment
+            is_accepted = True  # help comment
         else:
-            print("Invalid name, just accept alphabetical letters.\n")
-        return is_string
+            print("Invalid answer, just accept alphabetical letters.\n")
+        return is_accepted
 
     @classmethod
     def get_quantity(cls):
         while True:
             product_quantity = input("Quantity: ").strip()
-            is_int = False
 
             # g and k are accepted because equals gram or kilogram
             digits = re.findall("[^0-9kg.,]", product_quantity, re.IGNORECASE)
 
-            if not digits:
-                is_int = True
-            else:
-                print(
-                    "Invalid quantity, just accepts numbers and the letters K and G.\n"
-                )
+            is_int = cls.is_integer_or_kg(digits)
 
             if product_quantity and is_int:
                 break
@@ -53,9 +47,18 @@ class Product:
         return product_quantity
 
     @classmethod
+    def is_integer_or_kg(cls, digits):
+        is_int = False
+        if not digits:
+            is_int = True
+        else:
+            print("Invalid quantity, just accepts numbers and the letters K and G.\n")
+
+        return is_int
+
+    @classmethod
     def get_price_optional(cls):
         while True:
-            can_exit = False
 
             product_price_yn = input("Do you wan't to put the price? (Y/N) ").strip()
 
@@ -63,17 +66,20 @@ class Product:
             digit_yes = re.search("y", product_price_yn, re.IGNORECASE)
             digit_no = re.search("n", product_price_yn, re.IGNORECASE)
 
-            if len(digit) > 1:
-                print("Invalid answer, type just one character\n")
-            if not digit_yes and not digit_no:
-                print("Invalid answer, type Y or N (uppercase or lowercase)\n")
+            cls.is_yes_or_no_error_message(digit, digit_yes, digit_no)
 
             if digit_no and len(digit) == 1:
                 break
 
             if digit_yes and len(digit) == 1:
-
                 return Product.get_price_normal()
+
+    @classmethod
+    def is_yes_or_no_error_message(cls, digit, digit_yes, digit_no):
+        if len(digit) > 1:
+            print("Invalid answer, type just one character\n")
+        if not digit_yes and not digit_no:
+            print("Invalid answer, type Y or N (uppercase or lowercase)\n")
 
     @classmethod
     def get_price_normal(cls):
