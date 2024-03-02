@@ -1,4 +1,4 @@
-from Product_file import Product
+from Product import Product
 
 
 class Predefinition:
@@ -12,7 +12,8 @@ class Predefinition:
             for line in predef_file:
                 name, quantity, price, space = line.split(";")
                 self.predefinition_list.append(
-                    {"name": name, "quantity": quantity, "price": price})
+                    {"name": name, "quantity": quantity, "price": price}
+                )
 
     def show(self):
         print("\nThis is your predefinition list:\n")
@@ -28,14 +29,16 @@ class Predefinition:
 
         if name and quantity:
             self.predefinition_list.append(
-                {"name": name, "quantity": quantity, "price": price})
+                {"name": name, "quantity": quantity, "price": price}
+            )
 
         else:
             name = Product.get_product()
             quantity = Product.get_quantity()
             price = Product.get_price_optional()
             self.predefinition_list.append(
-                {"name": name, "quantity": quantity, "price": price})
+                {"name": name, "quantity": quantity, "price": price}
+            )
 
     def remove(self, name: str):
         item_is_in = False
@@ -53,14 +56,16 @@ class Predefinition:
     def write_txt(self):
         with open("predefinition.txt", "w") as file:
             for item in self.predefinition_list:
-                file.write(
-                    f"{item['name']};{item['quantity']};{item['price']};\n")
+                file.write(f"{item['name']};{item['quantity']};{item['price']};\n")
 
-    def start_checkmode(self):
+    def start_checkmode(self):  # need to cleancode this method
         print(
-            15 * "-", "CHECKMODE", 15 * "-", "\n",
+            15 * "-",
+            "CHECKMODE",
+            15 * "-",
+            "\n",
             "In this mode you can check the square brackets so that you stay\norganized in your shopping"
-            "\nYou can exit this mode by checking all the items"
+            "\nYou can exit this mode by checking all the items",
         )
 
         def not_found():
@@ -72,17 +77,15 @@ class Predefinition:
                 for item in self.predefinition_list:
                     is_checked = False
                     for checked in self.checked_items:
-                        if item['name'] == checked['name']:
+                        if item["name"] == checked["name"]:
                             is_checked = True
-                            print(
-                                f"[X] {item['name']}, Quantity: {item['quantity']}")
+                            print(f"[X] {item['name']}, Quantity: {item['quantity']}")
                     if is_checked == False:
-                        print(
-                            f"[ ] {item['name']}, Quantity: {item['quantity']}")
+                        print(f"[ ] {item['name']}, Quantity: {item['quantity']}")
 
             print_check_list()
 
-            print(30*"-", "\n")
+            print(30 * "-", "\n")
 
             is_to_check = False
 
@@ -96,7 +99,7 @@ class Predefinition:
 
                 if item_to_check:
                     for item in self.predefinition_list:
-                        if item['name'] == item_to_check:
+                        if item["name"] == item_to_check:
                             is_to_check = True
 
                 if item_to_check and is_to_check:
@@ -112,12 +115,16 @@ class Predefinition:
             if item_to_check == "" and not is_to_check:
                 while True:
                     is_unchecked = False
-                    uncheck = input(
-                        "(Don't write anything if you want to skip)\n"
-                        "Write the item's name you want to uncheck: "
-                    ).strip().capitalize()
+                    uncheck = (
+                        input(
+                            "(Don't write anything if you want to skip)\n"
+                            "Write the item's name you want to uncheck: "
+                        )
+                        .strip()
+                        .capitalize()
+                    )
                     for item in self.checked_items:
-                        if item['name'] == uncheck:
+                        if item["name"] == uncheck:
                             is_unchecked = True
                             self.checked_items.remove(item)
                             print("ok")

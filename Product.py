@@ -1,5 +1,6 @@
 import re
 
+
 class Product:
 
     def __init__(self, name, quantity, price=None):
@@ -11,33 +12,24 @@ class Product:
     def get_product(cls):
         while True:
             product_name = input("Product name: ").strip().capitalize()
-            is_string = False
 
-            '''
-            try:
-                float(product_name)
-            except ValueError:
-                is_string = True
+            digits = re.findall("[^a-z]", product_name, re.IGNORECASE)
 
-            try:
-                int(product_name)
-            except ValueError:
-                is_string = True
-                
-            the int verification is working, but the float one isn't
-            so i change to the re.findall() because I didn't understand why it's not working
-            '''
-            digits = re.findall("[^a-z]", product_name, re.IGNORECASE)  # re method
-
-            if not digits:
-                is_string = True  # help comment
-            else:
-                print("Invalid name, just accept alphabetical letters.\n")
+            is_string = cls.is_alphabetical(digits)
 
             if product_name and is_string:
                 break
 
         return product_name
+
+    @classmethod
+    def is_alphabetical(cls, digits):
+        is_string = False
+        if not digits:
+            is_string = True  # help comment
+        else:
+            print("Invalid name, just accept alphabetical letters.\n")
+        return is_string
 
     @classmethod
     def get_quantity(cls):
@@ -52,7 +44,8 @@ class Product:
                 is_int = True
             else:
                 print(
-                    "Invalid quantity, just accepts numbers and the letters K and G.\n")
+                    "Invalid quantity, just accepts numbers and the letters K and G.\n"
+                )
 
             if product_quantity and is_int:
                 break
@@ -64,8 +57,7 @@ class Product:
         while True:
             can_exit = False
 
-            product_price_yn = input(
-                "Do you wan't to put the price? (Y/N) ").strip()
+            product_price_yn = input("Do you wan't to put the price? (Y/N) ").strip()
 
             digit = re.findall("(y|n)", product_price_yn, re.IGNORECASE)
             digit_yes = re.search("y", product_price_yn, re.IGNORECASE)
