@@ -1,6 +1,7 @@
 from Product import Product
 from Predefinition import Predefinition
 from Interface import Interface
+from CheckMode import CheckMode
 
 predefinition = Predefinition()
 
@@ -27,11 +28,9 @@ def main():
             case {"question_number": 1, "answer": 1}:
                 predefinition.show()
             case {"question_number": 1, "answer": 3}:
-                predefinition.start_checkmode()
+                CheckMode.start_checkmode(predefinition)
             case {"question_number": 1, "answer": 4}:
                 break
-
-        # substitute every if/else by match/case
 
         if (
             answer_menu_1["question_number"] == 0

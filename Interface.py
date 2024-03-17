@@ -1,8 +1,6 @@
 import re
 from Product import Product
 
-# correc error described in the error section in "observation_final.txt"
-
 
 class Interface:
 
