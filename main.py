@@ -1,13 +1,13 @@
 from Product import Product
 from Predefinition import Predefinition
-from Interface import Interface
+from User_input_prompter import User_input_prompter
 from CheckMode import CheckMode
-
-predefinition = Predefinition()
 
 
 def product_in_list_check_assignments(instance: object):
-    new_values_return = Interface.product_in_list_check(instance.name, predefinition)
+    new_values_return = User_input_prompter.product_in_list_check(
+        instance.name, predefinition
+    )
 
     if isinstance(new_values_return, list):
         to_delete_name = instance.name
@@ -22,7 +22,7 @@ def main():
     predefinition.fill("predefinition.txt")
 
     while True:
-        answer_menu_1 = Interface.menu_questions_main()
+        answer_menu_1 = User_input_prompter.menu_questions_main()
 
         match answer_menu_1:
             case {"question_number": 1, "answer": 1}:
@@ -37,7 +37,7 @@ def main():
             and answer_menu_1["answer"] == "other_function"
         ):
             while True:
-                answer_change_list = Interface.menu_question_change_list()
+                answer_change_list = User_input_prompter.menu_question_change_list()
                 match answer_change_list:
                     case 1:
                         product_inst = Product(
@@ -46,7 +46,8 @@ def main():
                             Product.get_price_optional(),
                         )
                         to_remove_name = product_in_list_check_assignments(product_inst)
-                        predefinition.remove(to_remove_name)
+                        if to_remove_name:
+                            predefinition.remove(to_remove_name)
                         predefinition.add(
                             product_inst.name, product_inst.quantity, product_inst.price
                         )
@@ -59,5 +60,6 @@ def main():
 
 
 if __name__ == "__main__":
+    predefinition = Predefinition()
     main()
     predefinition.write_txt()

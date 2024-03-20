@@ -2,7 +2,7 @@ import re
 from Product import Product
 
 
-class Interface:
+class User_input_prompter:
 
     @staticmethod
     def menu_question_change_list():
@@ -56,7 +56,9 @@ class Interface:
                 "What do you want to update the product?\n[1] Just the name\n[2] Just the quantity\n[3] Just the price\n[4] Everything\n[5] Nothing\n"
             )
 
-            is_ok = Interface.write_over_choice_input_verification(write_over_choice)
+            is_ok = User_input_prompter.write_over_choice_input_verification(
+                write_over_choice
+            )
 
             if is_ok:
                 break
@@ -102,7 +104,7 @@ class Interface:
                 flag_first_time = True
 
                 while True:
-                    Interface.product_in_list_check_question_interface(
+                    User_input_prompter.product_in_list_check_question_interface(
                         product,
                         flag_first_time,
                         return_value_write_over,
@@ -115,8 +117,10 @@ class Interface:
 
                     flag_first_time = False
 
-                    return_value_write_over = Interface.write_over_choice_function(
-                        product["name"], product["quantity"], product["price"]
+                    return_value_write_over = (
+                        User_input_prompter.write_over_choice_function(
+                            product["name"], product["quantity"], product["price"]
+                        )
                     )
 
                     if (
