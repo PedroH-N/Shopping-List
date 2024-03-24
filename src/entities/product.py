@@ -1,4 +1,5 @@
 import re
+import src.helpers.input_helper as Input_Helper
 
 
 class Product:
@@ -15,7 +16,7 @@ class Product:
 
             digits = re.findall("[^a-z]", product_name, re.IGNORECASE)
 
-            is_string = cls.is_alphabetical(digits)
+            is_string = Input_Helper.is_alphabetical(digits)
 
             if product_name and is_string:
                 break
@@ -30,7 +31,7 @@ class Product:
             # g and k are accepted because equals gram or kilogram
             digits = re.findall("[^0-9kg.,]", product_quantity, re.IGNORECASE)
 
-            is_int = cls.is_weight(digits)
+            is_int = Input_Helper.is_weight(digits)
 
             if product_quantity and is_int:
                 break
@@ -43,7 +44,9 @@ class Product:
 
             product_price_yn = input("Do you wan't to put the price? (Y/N) ").strip()
 
-            digit, digit_yes, digit_no = cls.yes_or_no_checkings(product_price_yn)
+            digit, digit_yes, digit_no = Input_Helper.yes_or_no_checkings(
+                product_price_yn
+            )
 
             if digit_no and len(digit) == 1:
                 break
@@ -58,48 +61,7 @@ class Product:
 
             digits = re.findall("[^0-9.,]", product_price, re.IGNORECASE)
 
-            is_int = cls.is_int(digits)
+            is_int = Input_Helper.is_int(digits)
 
             if product_price and is_int:
                 return product_price
-
-    # ----
-
-    @classmethod
-    def is_alphabetical(cls, digits):
-        is_string = False
-        if not digits:
-            is_string = True
-        else:
-            print("Invalid name, just accept alphabetical letters.\n")
-        return is_string
-
-    @classmethod
-    def is_weight(cls, digits):
-        is_int = False
-        if not digits:
-            is_int = True
-        else:
-            print("Invalid quantity, just accepts numbers and the letters K and G.\n")
-        return is_int
-
-    @classmethod
-    def yes_or_no_checkings(cls, product_price_yn):
-        digit = re.findall("(y|n)", product_price_yn, re.IGNORECASE)
-        digit_yes = re.search("y", product_price_yn, re.IGNORECASE)
-        digit_no = re.search("n", product_price_yn, re.IGNORECASE)
-
-        if len(digit) > 1:
-            print("Invalid answer, type just one character\n")
-        if not digit_yes and not digit_no:
-            print("Invalid answer, type Y or N (uppercase or lowercase)\n")
-        return digit, digit_yes, digit_no
-
-    @classmethod
-    def is_int(cls, digits):
-        is_int = False
-        if not digits:
-            is_int = True
-        else:
-            print("Invalid price")
-        return is_int

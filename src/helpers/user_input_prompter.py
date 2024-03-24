@@ -1,5 +1,6 @@
 import re
-from Product import Product
+from src.entities.product import Product
+import src.helpers.input_helper as Input_Helper
 
 
 class User_input_prompter:
@@ -87,7 +88,7 @@ class User_input_prompter:
             "Do you want to change something more about the item? (Y/N)"
         )
 
-        digit, digit_yes, digit_no = Product.yes_or_no_checkings(question_continue)
+        digit, digit_yes, digit_no = Input_Helper.yes_or_no_checkings(question_continue)
 
         if digit_no and len(digit) == 1:
             return {"name": name, "quantity": quantity, "price": price, "exit": 1}

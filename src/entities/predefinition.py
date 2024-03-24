@@ -1,4 +1,4 @@
-from Product import Product
+from src.entities.product import Product
 
 
 class Predefinition:

@@ -1,4 +1,4 @@
-from Predefinition import Predefinition
+from src.entities.predefinition import Predefinition
 
 
 class CheckMode(Predefinition):
